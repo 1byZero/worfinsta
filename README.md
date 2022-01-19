@@ -1,8 +1,8 @@
-# [Influencer Marketing Platform](https://worf.in) [![Tweet](#)](#)
+# [Influencer Marketing Platform](https://worf.in) [![Worfinsta V 1.0.1](#)](#)
 
  ![version](https://img.shields.io/badge/version-1.0.0-blue.svg) [![GitHub issues open](#)](#) [![GitHub issues closed](#)](#) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
 
-Open-source **[Django Template](#)** crafted on top of **Soft UI Dashboard**, a modern Bootstrap 5 design. Start your development with a modern Bootstrap 5 Admin template for Django. Soft UI Dashboard is built with over 70 individual components, giving you the freedom of choosing and combining. If you want to code faster, with a smooth workflow, then you should try this template carefully developed with Django, a well-known Python Framework.
+Open-source **[Django Web application](#)** crafted on top of **worfinsta**, a modern Bootstrap 5 design. Start your development with a modern Bootstrap 5 Admin template for Django. Soft UI Dashboard is built with over 70 individual components, giving you the freedom of choosing and combining. If you want to code faster, with a smooth workflow, then you should try this template carefully developed with Django, a well-known Python Framework.
 
 > Features
 
