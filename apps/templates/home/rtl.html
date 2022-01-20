@@ -27,14 +27,15 @@
                     <th></th>
                   </tr>
                 </thead>
-
-                <div class="ms-md-auto ps-md-3 d-flex align-items-center">
+              </table>
+               <div class="ms-md-auto ps-md-3 d-flex align-items-center">
                    <div class="bg-white border-radius-lg d-flex">
+                     <form action = "influencer_profile/main.py" method = "POST">{% csrf_token %}
                     <input type="text" class="form-control border-0 ps-3" placeholder="Search Influencers...">
-                    <button class="btn bg-gradient-primary my-1 me-1"> Search</button>
+                    <button class="btn bg-gradient-primary my-1 me-1"> Run Osintgram</button>
+                     </form>
                    </div>
                 </div>
-              </table>
             </div>
           </div>
         </div>

@@ -10,3 +10,10 @@ sqlparse==0.4.2
 toml==0.10.2
 Unipath==1.1
 whitenoise==5.3.0
+requests==2.27.1
+requests-toolbelt==0.9.1
+geopy>=2.0.0
+prettytable==3.0.0
+instagram-private-api==1.6.0.0
+gnureadline>=8.0.0; platform_system != "Windows"
+pyreadline~=2.1
