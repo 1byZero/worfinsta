@@ -5,7 +5,7 @@ Open-source **[Django Web application](#)** crafted on top of **worfinsta**, a m
 
 > Features
 
-- Up-to-date [dependencies](./requirements.txt): **Django 3.2.6 LTS**
+- Up-to-date [dependencies](./requirements.txt): **Django 3.2.11 LTS**
 - [SCSS compilation](#recompile-css) via **Gulp**
 - UI Kit: **Soft UI Dashboard** (Free Version)
 - Django Codebase - provided by **[AppSeed](https://appseed.us/)**
