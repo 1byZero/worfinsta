@@ -8,6 +8,7 @@ from pathlib import Path
 
 import requests
 import ssl
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 from geopy.geocoders import Nominatim
@@ -34,7 +35,6 @@ class Osintgram:
     cli_mode = False
     output_dir = "output"
 
-
     def __init__(self, target, is_file, is_json, is_cli, output_dir, clear_cookies):
         self.output_dir = output_dir or self.output_dir
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
@@ -43,13 +43,13 @@ class Osintgram:
         self.clear_cookies(clear_cookies)
         self.cli_mode = is_cli
         if not is_cli:
-          print("\nAttempt to login...")
+            print("\nWorfinsta is attempting to login...")
         self.login(u, p)
         self.setTarget(target)
         self.writeFile = is_file
         self.jsonDump = is_json
 
-    def clear_cookies(self,clear_cookies):
+    def clear_cookies(self, clear_cookies):
         if clear_cookies:
             self.clear_cache()
 
@@ -274,7 +274,7 @@ class Osintgram:
 
         pc.printout("Retrieving all comments, this may take a moment...\n")
         data = self.__get_feed__()
-        
+
         _comments = []
         t = PrettyTable(['POST ID', 'ID', 'Username', 'Comment'])
         t.align["POST ID"] = "l"
@@ -288,27 +288,26 @@ class Osintgram:
             for comment in comments:
                 t.add_row([post_id, comment.get('user_id'), comment.get('user').get('username'), comment.get('text')])
                 comment = {
-                        "post_id": post_id,
-                        "user_id":comment.get('user_id'), 
-                        "username": comment.get('user').get('username'),
-                        "comment": comment.get('text')
-                    }
+                    "post_id": post_id,
+                    "user_id": comment.get('user_id'),
+                    "username": comment.get('user').get('username'),
+                    "comment": comment.get('text')
+                }
                 _comments.append(comment)
-        
+
         print(t)
         if self.writeFile:
             file_name = self.output_dir + "/" + self.target + "_comment_data.txt"
             with open(file_name, 'w') as f:
                 f.write(str(t))
                 f.close()
-        
+
         if self.jsonDump:
             file_name_json = self.output_dir + "/" + self.target + "_comment_data.json"
             with open(file_name_json, 'w') as f:
                 f.write("{ \"Comments\":[ \n")
                 f.write('\n'.join(json.dumps(comment) for comment in _comments) + ',\n')
                 f.write("]} ")
-
 
     def get_followers(self):
         if self.check_private_profile():
@@ -318,7 +317,6 @@ class Osintgram:
 
         _followers = []
         followers = []
-
 
         rank_token = AppClient.generate_uuid()
         data = self.api.user_followers(str(self.target_id), rank_token=rank_token)
@@ -334,7 +332,7 @@ class Osintgram:
             next_max_id = results.get('next_max_id')
 
         print("\n")
-            
+
         for user in _followers:
             u = {
                 'id': user['pk'],
@@ -510,7 +508,7 @@ class Osintgram:
         try:
             endpoint = 'users/{user_id!s}/full_detail_info/'.format(**{'user_id': self.target_id})
             content = self.api._call_api(endpoint)
-           
+
             data = content['user_detail']['user']
 
             pc.printout("[ID] ", pc.GREEN)
@@ -536,7 +534,7 @@ class Osintgram:
                 pc.printout(str(data['public_email']) + '\n')
             pc.printout("[HD PROFILE PIC] ", pc.GREEN)
             pc.printout(str(data['hd_profile_pic_url_info']['url']) + '\n')
-            if 'fb_page_call_to_action_id' in data and data['fb_page_call_to_action_id']: 
+            if 'fb_page_call_to_action_id' in data and data['fb_page_call_to_action_id']:
                 pc.printout("[FB PAGE] ", pc.RED)
                 pc.printout(str(data['connected_fb_page']) + '\n')
             if 'whatsapp_number' in data and data['whatsapp_number']:
@@ -565,7 +563,7 @@ class Osintgram:
                 }
                 if 'public_email' in data and data['public_email']:
                     user['email'] = data['public_email']
-                if 'fb_page_call_to_action_id' in data and data['fb_page_call_to_action_id']: 
+                if 'fb_page_call_to_action_id' in data and data['fb_page_call_to_action_id']:
                     user['connected_fb_page'] = data['fb_page_call_to_action_id']
                 if 'whatsapp_number' in data and data['whatsapp_number']:
                     user['whatsapp_number'] = data['whatsapp_number']
@@ -853,7 +851,7 @@ class Osintgram:
         else:
             pc.printout("How many photos you want to download (default all): ", pc.YELLOW)
             user_input = input()
-          
+
         try:
             if user_input == "":
                 pc.printout("Downloading all photos available...\n")
@@ -911,7 +909,8 @@ class Osintgram:
         sys.stdout.write(" photos")
         sys.stdout.flush()
 
-        pc.printout("\nWoohoo! We downloaded " + str(counter) + " photos (saved in " + self.output_dir + " folder) \n", pc.GREEN)
+        pc.printout("\nWoohoo! We downloaded " + str(counter) + " photos (saved in " + self.output_dir + " folder) \n",
+                    pc.GREEN)
 
     def get_user_propic(self):
 
@@ -924,9 +923,9 @@ class Osintgram:
             if "hd_profile_pic_url_info" in data:
                 URL = data["hd_profile_pic_url_info"]['url']
             else:
-                #get better quality photo
+                # get better quality photo
                 items = len(data['hd_profile_pic_versions'])
-                URL = data["hd_profile_pic_versions"][items-1]['url']
+                URL = data["hd_profile_pic_versions"][items - 1]['url']
 
             if URL != "":
                 end = self.output_dir + "/" + self.target + "_propic.jpg"
@@ -935,7 +934,7 @@ class Osintgram:
 
             else:
                 pc.printout("Sorry! No results found :-(\n", pc.RED)
-        
+
         except ClientError as e:
             error = json.loads(e.error_response)
             print(error['message'])
@@ -1059,16 +1058,16 @@ class Osintgram:
 
             return user
         except ClientError as e:
-            pc.printout('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(e.msg, e.code, e.error_response), pc.RED)
+            pc.printout('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(e.msg, e.code, e.error_response),
+                        pc.RED)
             error = json.loads(e.error_response)
             if 'message' in error:
                 print(error['message'])
             if 'error_title' in error:
                 print(error['error_title'])
             if 'challenge' in error:
-                print("Please follow this link to complete the challenge: " + error['challenge']['url'])    
+                print("Please follow this link to complete the challenge: " + error['challenge']['url'])
             sys.exit(2)
-        
 
     def set_write_file(self, flag):
         if flag:
@@ -1125,7 +1124,8 @@ class Osintgram:
                                  on_login=lambda x: self.onlogin_callback(x, settings_file))
 
         except ClientError as e:
-            pc.printout('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(e.msg, e.code, e.error_response), pc.RED)
+            pc.printout('ClientError {0!s} (Code: {1:d}, Response: {2!s})'.format(e.msg, e.code, e.error_response),
+                        pc.RED)
             error = json.loads(e.error_response)
             pc.printout(error['message'], pc.RED)
             pc.printout(": ", pc.RED)
@@ -1174,7 +1174,7 @@ class Osintgram:
             return
 
         followers = []
-        
+
         try:
 
             pc.printout("Searching for emails of target followers... this can take a few minutes\n")
@@ -1195,7 +1195,7 @@ class Osintgram:
                 sys.stdout.write("\rCatched %i followers email" % len(followers))
                 sys.stdout.flush()
                 results = self.api.user_followers(str(self.target_id), rank_token=rank_token, max_id=next_max_id)
-                
+
                 for user in results.get('users', []):
                     u = {
                         'id': user['pk'],
@@ -1205,14 +1205,14 @@ class Osintgram:
                     followers.append(u)
 
                 next_max_id = results.get('next_max_id')
-            
+
             print("\n")
 
             results = []
-            
+
             pc.printout("Do you want to get all emails? y/n: ", pc.YELLOW)
             value = input()
-            
+
             if value == str("y") or value == str("yes") or value == str("Yes") or value == str("YES"):
                 value = len(followers)
             elif value == str(""):
@@ -1242,8 +1242,9 @@ class Osintgram:
                         break
                     results.append(follow)
 
-        except ClientThrottledError  as e:
-            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.", pc.RED)
+        except ClientThrottledError as e:
+            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.",
+                        pc.RED)
             pc.printout("\n")
 
         if len(results) > 0:
@@ -1297,7 +1298,7 @@ class Osintgram:
                 followings.append(u)
 
             next_max_id = data.get('next_max_id')
-            
+
             while next_max_id:
                 results = self.api.user_following(str(self.target_id), rank_token=rank_token, max_id=next_max_id)
 
@@ -1310,12 +1311,12 @@ class Osintgram:
                     followings.append(u)
 
                 next_max_id = results.get('next_max_id')
-        
+
             results = []
-            
+
             pc.printout("Do you want to get all emails? y/n: ", pc.YELLOW)
             value = input()
-            
+
             if value == str("y") or value == str("yes") or value == str("Yes") or value == str("YES"):
                 value = len(followings)
             elif value == str(""):
@@ -1346,11 +1347,12 @@ class Osintgram:
                     if len(results) > value:
                         break
                     results.append(follow)
-        
+
         except ClientThrottledError as e:
-            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.", pc.RED)
+            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.",
+                        pc.RED)
             pc.printout("\n")
-        
+
         print("\n")
 
         if len(results) > 0:
@@ -1384,7 +1386,7 @@ class Osintgram:
     def get_fwingsnumber(self):
         if self.check_private_profile():
             return
-       
+
         try:
 
             pc.printout("Searching for phone numbers of users followed by target... this can take a few minutes\n")
@@ -1403,7 +1405,7 @@ class Osintgram:
                 followings.append(u)
 
             next_max_id = data.get('next_max_id')
-            
+
             while next_max_id:
                 results = self.api.user_following(str(self.target_id), rank_token=rank_token, max_id=next_max_id)
 
@@ -1416,12 +1418,12 @@ class Osintgram:
                     followings.append(u)
 
                 next_max_id = results.get('next_max_id')
-       
+
             results = []
-        
+
             pc.printout("Do you want to get all phone numbers? y/n: ", pc.YELLOW)
             value = input()
-            
+
             if value == str("y") or value == str("yes") or value == str("Yes") or value == str("YES"):
                 value = len(followings)
             elif value == str(""):
@@ -1454,9 +1456,10 @@ class Osintgram:
                     results.append(follow)
 
         except ClientThrottledError as e:
-            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.", pc.RED)
+            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.",
+                        pc.RED)
             pc.printout("\n")
-        
+
         print("\n")
 
         if len(results) > 0:
@@ -1497,7 +1500,6 @@ class Osintgram:
 
             pc.printout("Searching for phone numbers of users followers... this can take a few minutes\n")
 
-
             rank_token = AppClient.generate_uuid()
             data = self.api.user_following(str(self.target_id), rank_token=rank_token)
 
@@ -1510,7 +1512,7 @@ class Osintgram:
                 followings.append(u)
 
             next_max_id = data.get('next_max_id')
-            
+
             while next_max_id:
                 results = self.api.user_following(str(self.target_id), rank_token=rank_token, max_id=next_max_id)
 
@@ -1523,12 +1525,12 @@ class Osintgram:
                     followings.append(u)
 
                 next_max_id = results.get('next_max_id')
-        
+
             results = []
-            
+
             pc.printout("Do you want to get all phone numbers? y/n: ", pc.YELLOW)
             value = input()
-            
+
             if value == str("y") or value == str("yes") or value == str("Yes") or value == str("YES"):
                 value = len(followings)
             elif value == str(""):
@@ -1561,7 +1563,8 @@ class Osintgram:
                     results.append(follow)
 
         except ClientThrottledError as e:
-            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.", pc.RED)
+            pc.printout("\nError: Instagram blocked the requests. Please wait a few minutes before you try again.",
+                        pc.RED)
             pc.printout("\n")
 
         print("\n")
@@ -1607,7 +1610,7 @@ class Osintgram:
             comments = self.__get_comments__(post['id'])
             for comment in comments:
                 print(comment['text'])
-                
+
                 # if not any(u['id'] == comment['user']['pk'] for u in users):
                 #     user = {
                 #         'id': comment['user']['pk'],
@@ -1656,10 +1659,10 @@ class Osintgram:
 
     def clear_cache(self):
         try:
-            f = open("config/settings.json",'w')
+            f = open("config/settings.json", 'w')
             f.write("{}")
-            pc.printout("Cache Cleared.\n",pc.GREEN)
+            pc.printout("Cache Cleared.\n", pc.GREEN)
         except FileNotFoundError:
-            pc.printout("Settings.json don't exist.\n",pc.RED)
+            pc.printout("Settings.json don't exist.\n", pc.RED)
         finally:
             f.close()
