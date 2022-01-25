@@ -15,6 +15,9 @@
     "engines": {
         "node": ">=10.0.0"
     },
-    "dependencies": {},
-    "devDependencies": {}
+    "dependencies": {
+        "express": "^4.17.2",
+        "gulp": "^3.9.1",
+        "python-shell": "^3.0.1"
+    }
 }
