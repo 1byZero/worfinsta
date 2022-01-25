@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# index.py
 
 import argparse
 import signal
@@ -17,7 +18,6 @@ except:
 
 
 def printlogo():
-
     pc.printout("Type 'list' to show all allowed commands\n")
     pc.printout("Type 'FILE=y' to save results to files like '<target username>_<command>.txt (default is disabled)'\n")
     pc.printout("Type 'FILE=n' to disable saving to files'\n")
