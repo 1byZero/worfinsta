@@ -1,13 +1,13 @@
+import codecs
 import datetime
 import json
+import os
+import ssl
 import sys
 import urllib
-import os
-import codecs
 from pathlib import Path
 
 import requests
-import ssl
 
 ssl._create_default_https_context = ssl._create_unverified_context
 

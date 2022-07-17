@@ -128,7 +128,7 @@ The project is coded using a simple and intuitive structure presented bellow:
    |         |    |-- register.html         # Register page
    |         |
    |         |-- home/                      # UI Kit Pages
-   |              |-- index.html            # Index page
+   |              |-- osintgram.html            # Index page
    |              |-- 404-page.html         # 404 page
    |              |-- *.html                # All other pages
    |
@@ -234,7 +234,7 @@ At present, we officially aim to support the last two versions of the following 
 - Documentation: <https://worf.in>
 - License Agreement: <https://www.worf.in/license>
 - Support: <https://worf.in/support>
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/soft-ui-dashboard-django/issues)
+- Issues: [Github Issues Page](https://office.worf.in/contact)
 
 <br />
 
@@ -250,7 +250,7 @@ We use GitHub Issues as the official bug tracker for the **Soft UI Dashboard Dja
 
 ## Technical Support or Questions
 
-If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
+If you have questions or need help integrating the product please [contact us](https://worf.in/contact/) instead of opening an issue.
 
 <br />
 
