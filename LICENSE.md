@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 - present Creative-Tim / [AppSeed.us](https://appseed.us)
+Copyright (c) 2019 - present Worf Internet Services Private Limited  / [worf.in](https://worf.in)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
